@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index en la vista de Repaso Html</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>HOLA</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>HOLA</th>
+        </tr>
+    </tbody>
+</table>
+
+
+<form>
+    <div class="form-group">
+        <label for="titulo">Titulo</label>
+        <input type="text" class="form-control" id="titulo" placeholder="Tu titulo" required>
+    </div>
+    <div class="form-group">
+        <label for="estado">Password</label>
+        <select class="form-control" id="estado">
+            <option value="1">En proceso</option>
+            <option value="2">Terminano</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="fechacreacion">Fecha Creacion</label>
+        <input id="fechacreacion" class="form-control" type="datetime-local">
+    </div>
+    <div class="form-group">
+        <label for="fechatermino">Fecha Termino</label>
+        <input id="fechatermino" class="form-control" type="datetime-local">
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
