@@ -22,12 +22,12 @@ namespace AplicacionWebMVC.Controllers
 
         public JsonResult LlenarCombo()
         {
-            List<Tarea> listaTareas = new List<Tarea> {
-                new Tarea{Id=1,Titulo="Exponer",Estado=1,Fechacreacion=DateTime.Parse("28/12/2019"),Fechatermino=DateTime.Parse("28/12/2019")},
-                new Tarea{Id=2,Titulo="Exponer2",Estado=2,Fechacreacion=DateTime.Parse("28/12/2019"),Fechatermino=DateTime.Parse("28/12/2019") },
-                new Tarea{Id=3,Titulo="Exponer3",Estado=2,Fechacreacion=DateTime.Parse("28/12/2019"),Fechatermino=DateTime.Parse("28/12/2019") }
-            };
-            return Json(listaTareas, JsonRequestBehavior.AllowGet);
+            //List<Tarea> listaTareas = new List<Tarea> {
+            //    new Tarea{Id=1,Titulo="Exponer",Estado=1,Fechacreacion=DateTime.Parse("28/12/2019"),Fechatermino=DateTime.Parse("28/12/2019")},
+            //    new Tarea{Id=2,Titulo="Exponer2",Estado=2,Fechacreacion=DateTime.Parse("28/12/2019"),Fechatermino=DateTime.Parse("28/12/2019") },
+            //    new Tarea{Id=3,Titulo="Exponer3",Estado=2,Fechacreacion=DateTime.Parse("28/12/2019"),Fechatermino=DateTime.Parse("28/12/2019") }
+            //};
+            return Json(1, JsonRequestBehavior.AllowGet);
         }
 
 

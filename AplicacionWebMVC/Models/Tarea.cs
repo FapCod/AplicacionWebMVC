@@ -7,10 +7,12 @@ namespace AplicacionWebMVC.Models
 {
     public class Tarea
     {
-        public int Id { get; set; }
-        public string Titulo { get; set; }
-        public int Estado { get; set; }
-        public DateTime Fechacreacion { get; set; }
-        public DateTime Fechatermino { get; set; }
+        public int ID { get; set; }
+        public string TITULO { get; set; }
+        public string NOTAS { get; set; }
+        public int ESTADO { get; set; }
+        public int PRIORIDAD { get; set; }
+        public DateTime? FECHA_CREACION { get; set; }
+        public DateTime? FECHA_TERMINO { get; set; }
     }
 }

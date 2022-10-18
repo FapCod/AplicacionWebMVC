@@ -2,21 +2,19 @@
 @{
     ViewBag.Title = "Index";
 }
-<link href="~/Content/CssPropio.css" rel="stylesheet" />
 <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
 <link href="~/Content/datatables.css" rel="stylesheet" />
-<h2>Index Alumno</h2>
-<label>Seleccione Sexo:</label>
-<select id="select">
+<h2>Index Docente</h2>
+<label>Ingrese modalidad de contrato</label>
+<select id="selectModalidad">
 </select>
-<input type="button" id="btnConsultarSexo" value="Buscar" class="btn btn-primary" />
-<input type="button" id="btnLimpiar" value="Limpiar" class="btn btn-success" />
 <br />
 <!-- Trigger the modal with a button -->
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Agregar</button>
 <div id="tabla">
 
 </div>
+
 
 @* crear un modal bootstrap 3 *@
 
@@ -33,12 +31,12 @@
             <div class="modal-body">
                 <table style="width:80%;margin:auto">
                     <tr>
-                        <td width="40%">ID Alumno:</td>
-                        <td width="60%"><input id="txtIdAlumno" type="text" readonly /></td>
+                        <td width="40%">ID Docente:</td>
+                        <td width="60%"><input id="txtIdCurso" type="text" readonly /></td>
                     </tr>
                     <tr>
                         <td width="40%">Nombre:</td>
-                        <td width="60%"><input id="txtNombreAlumno" type="text" /></td>
+                        <td width="60%"><input id="txtNombreDocente" type="text" /></td>
                     </tr>
                     <tr>
                         <td width="40%">Apellido Paterno:</td>
@@ -49,28 +47,46 @@
                         <td width="60%"><input id="txtApellidoM" type="text" /></td>
                     </tr>
                     <tr>
-                        <td width="40%">Fecha Nacimiento:</td>
-                        <td width="60%"><input id="datepickerFN" type="text" /></td>
+                        <td width="40%">Direccion:</td>
+                        <td width="60%"><input id="txtDireccion" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td width="40%">Telefono Celular:</td>
+                        <td width="60%"><input id="txtTelefonoC" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td width="40%">Telefono Fijo:</td>
+                        <td width="60%"><input id="txtTelefonoF" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td width="40%">Email:</td>
+                        <td width="60%"><input id="txtEmail" type="email" /></td>
                     </tr>
                     <tr>
                         <td width="40%">Sexo:</td>
                         <td width="60%">
                             <select id="selectSexo">
-                         
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <td width="40%">Telefono Padre:</td>
-                        <td width="60%"><input id="txtTelefonoP" type="text" /></td>
+                        <td width="40%">Fecha Contrato:</td>
+                        <td width="60%"><input id="datepickerFechaContrato" type="text" /></td>
+                    </tr>
+
+                    <tr>
+                        <td width="40%">Modalidad Contrato:</td>
+                        <td width="60%">
+                            <select id="selectModalidadC">
+                            </select>
+                        </td>
                     </tr>
                     <tr>
-                        <td width="40%">Telefono Madre:</td>
-                        <td width="60%"><input id="txtTelefonoM" type="text" /></td>
-                    </tr>
-                    <tr>
-                        <td width="40%">Cantidad de Hermanos:</td>
-                        <td width="60%"><input id="txtNHermanos" type="number" /></td>
+                        <td width="40%">Foto:</td>
+                        <td>
+                            <img id="imgFoto"  width="150" height="100" style="border:1px solid;" />
+                        </td>
+                        
                     </tr>
                 </table>
             </div>
@@ -84,10 +100,8 @@
 </div>
 @*fin modal*@
 
-
-
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery-ui.min.js"></script>
-<script src="~/Scripts/Alumno.js"></script>
+<script src="~/Scripts/Docente.js"></script>
 <script src="~/Scripts/datatables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>

@@ -1,5 +1,5 @@
 ﻿//llamando a la funcion de almanaque
-$("#datepickerFN").datepicker({
+$("#datepickerFechaContrato").datepicker({
     dateFormat: "dd/mm/yy",
     changeMonth: true,
     changeYear: true,
@@ -8,23 +8,35 @@ $("#datepickerFN").datepicker({
     monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
 });
 
-let arrayColumnas = ["ID", "NOMBRE", "APELLIDO PATERNO", "APELLIDO MATERNO", "TELEFONO PADRE"];
 
-const ListarAllAlumnos = () => {
-    $.get("Alumno/ListarALumnos", (data) => {
-        crearListado(arrayColumnas, data);
+
+
+let arrayColumnas = ["ID", "NOMBRE", "APELLIDO PATERNO", "APELLIDO MATERNO", "EMAIL"];
+
+const ListarAllDocentes = () => {
+    $.get("Docente/ListarDocentes", (data) => {
+        CrearListado(arrayColumnas, data);
     })
 }
 
-$.get("../Alumno/ListarSexo", (data) => {
-    let control = document.getElementById("select");
-    let combo = document.getElementById("selectSexo");  
-    llenarCombo(data, control, true);
-    llenarCombo(data, combo, true);
-    
-})
+const ListarCombo = () => {
+    $.get("../Docente/ListarModalidadContrato", (data) => {
+        let control = document.getElementById("selectModalidad");
+        let combo = document.getElementById("selectModalidadC");
+        LlenarCombo(data, control, true);
+        LlenarCombo(data, combo, true);
+    });
 
-const crearListado = (columnas,data) => {
+}
+//SABER CUANDO EL DOCUMENTO ESTA LISTO
+$(document).ready(function () {
+    ListarAllDocentes();
+    ListarCombo();
+    ListarSexo();
+});
+
+
+const CrearListado = (columnas, data) => {
     let contenido = "";
     contenido += "<table id='tablas' class='table'>"
     contenido += "<thead>"
@@ -49,6 +61,7 @@ const crearListado = (columnas,data) => {
             contenido += data[i][valorLlave]
             contenido += "</td>"
         }
+        //agregar columna de operaciones
         contenido += "<td>"
         contenido += "<button class='btn btn-primary' style='margin: 4px' data-toggle='modal' data-target='#myModal'> <i class='glyphicon glyphicon-edit'></i> </button>"
         contenido += "<button class='btn btn-danger'> <i class='glyphicon glyphicon-trash'></i></button>"
@@ -63,8 +76,14 @@ const crearListado = (columnas,data) => {
         searching: false
     });
 }
+const ListarSexo = () => {
+    $.get("../Alumno/ListarSexo", (data) => {
+        let combo = document.getElementById("selectSexo");
+        LlenarCombo(data, combo, true);
+    });
+}
 
-const llenarCombo = (data,control,primerElemento) => {
+const LlenarCombo = (data, control, primerElemento) => {
     let contenido = "";
     if (primerElemento == true) {
         contenido += "<option value=''>--Seleccione--</option>";
@@ -76,22 +95,16 @@ const llenarCombo = (data,control,primerElemento) => {
     control.innerHTML = contenido;
 }
 
-const btnConsultarSexo = document.getElementById("btnConsultarSexo");
-const btnLimpiar = document.getElementById("btnLimpiar");
-const BuscarPorSexo= () => {
-    let sexo = document.getElementById("select").value;
-    /*alert(nombre)*/
-    if (sexo == "") {
-        ListarAllAlumnos();
+const BuscarPorModalidad = () => {
+    let idModalidad = document.getElementById("selectModalidad").value;
+    if (idModalidad == "") {
+        ListarAllDocentes();
     } else {
-        $.get("../Alumno/BuscarPorSexo/?sexo=" + sexo, (data) => {
-            crearListado(arrayColumnas, data);
+        $.get("Docente/BuscarDocentePorModalidad/?modalidad=" + idModalidad, (data) => {
+            CrearListado(arrayColumnas, data);
         });
     }
 }
-btnConsultarSexo.addEventListener("click", BuscarPorSexo);
-btnLimpiar.addEventListener("click", ListarAllAlumnos);
-//saber cuando el dom ya cargo
-$(document).ready(function () {
-    ListarAllAlumnos();
-})
+
+const selectModalidad = document.getElementById("selectModalidad");
+selectModalidad.addEventListener("change", BuscarPorModalidad);

@@ -3,10 +3,11 @@
 const formularioUI = document.getElementById("formulario");
 const tablaUI = document.getElementById("divTabla");
 const actualizarUI = document.getElementById("actualizar");
+let arrayColumnas = ["ID", "TITULO", "ESTADO", "NOTAS", "PRIORIDAD", "FECHA_CREACION", "FECHA_TERMINO"];
 let arrayTareas = [];
 var IDEDITAR = 0;
 //funciones
-const CrearObjeto = (titulo, estado, fechacreacion, fechatermino) => {
+const CrearObjeto = (titulo, estado,notas,prioridad, fechacreacion, fechatermino) => {
     let id;
     let tamano;
     let idAntiguo;
@@ -30,26 +31,30 @@ const CrearObjeto = (titulo, estado, fechacreacion, fechatermino) => {
         Id: id,
         Titulo: titulo,
         Estado: estado,
+        Nota: notas,
+        Prioridad: prioridad,
         Fechacreacion: fechacreacion,
         Fechatermino: fechatermino
     };
     let form = new FormData();
-    form.append("Id", id);
-    form.append("Titulo", titulo);
-    form.append("Estado", estado);
-    form.append("Fechacreacion", fechacreacion);
-    form.append("Fechatermino", fechatermino);
-    console.log(tarea);
-    console.log(form + "souy el form");
+    form.append("ID", id);
+    form.append("TITULO", titulo);
+    form.append("ESTADO", estado);
+    form.append("NOTAS", notas);
+    form.append("PRIORIDAD", prioridad);
+    form.append("FECHA_CREACION", fechacreacion);
+    form.append("FECHA_TERMINO", fechatermino);
     $.ajax({
         type: "POST",
         url: "Tarea/CrearTarea",
-        data: tarea,
+        data: form,
         contentType: false,
         processData: false,
         success: function (data) {
             if (data == 1) {
                 alert("agregado");
+            } else {
+                alert("no agregado");
             }
         }
     });
@@ -59,7 +64,7 @@ const GuardarDB = () => {
     localStorage.setItem('listaTarea', JSON.stringify(arrayTareas));
     CrearTabla();
 }
-const CrearTabla = () => {
+const CrearTabla = (columnas, data) => {
     arrayTareas = JSON.parse(localStorage.getItem("listaTarea"));
     if (arrayTareas === null) {
         arrayTareas = [];
@@ -68,38 +73,55 @@ const CrearTabla = () => {
         contenido += "<table class='table'>"
         contenido += "<thead>"
         contenido += "<tr>"
-        contenido += "<td>ID</td>"
-        contenido += "<td>Titulo</td>"
-        contenido += "<td>Estado</td>"
-        contenido += "<td>FechaCreacion</td>"
-        contenido += "<td>FechaTermino</td>"
-        contenido += "<td class='col-span-3'>Funciones</td>"
+        for (let i = 0; i < columnas.length; i++) {
+            contenido += "<td>"
+            contenido += columnas[i]
+            contenido += "</td>"
+        }
+        //agregar columna de operaciones
+        contenido += "<td>Operaciones</td>"
         contenido += "</tr>"
         contenido += "</thead>"
         contenido += "<tbody>"
-        let tamano = arrayTareas.length;
+        let llaves = Object.keys(data[0]);
+        let tamano = data.length;
         for (let i = 0; i < tamano; i++) {
             contenido += "<tr>"
-            contenido += "<td>" + arrayTareas[i].Id + "</td>"
-            contenido += "<td>" + arrayTareas[i].Titulo + "</td>"
-            if (arrayTareas[i].Estado != 2) {
-                contenido += "<td>" + "Pendiente" + "</td>"
-            } else {
-                contenido += "<td>" + "Terminada" + "</td>"
+            for (let j = 0; j < llaves.length; j++) {
+                let valorLlave = llaves[j];
+                contenido += "<td>"
+                contenido += data[i][valorLlave]
+                contenido += "</td>"
             }
-            contenido += "<td>" + arrayTareas[i].Fechacreacion + "</td>"
-            contenido += "<td>" + arrayTareas[i].Fechatermino + "</td>"
-            if (arrayTareas[i].Estado != 2) {
-                contenido += "<td>" + "<button type='button' data-toggle='modal' data-target='#exampleModal' data-whatever='" + arrayTareas[i].Id + "'    class='btn btn-warning glyphicon glyphicon-pencil'></button>" + "</td>"
-            } else {
-                contenido += "<td>" + "<button type='button' data-toggle='modal' data-target='#exampleModal' data-whatever='" + arrayTareas[i].Id + "'    class='btn btn-warning glyphicon glyphicon-pencil' disabled></button>" + "</td>"
-            }
-            contenido += "<td>" + "<button type='button' onclick='EliminarDB(" + arrayTareas[i].Id + ")' class='btn btn-danger glyphicon glyphicon-trash'></button>" + "</td>"
+            contenido += "<td>"
+            contenido += "<button class='btn btn-primary' style='margin: 4px' data-toggle='modal' data-target='#myModal'> <i class='glyphicon glyphicon-edit'></i> </button>"
+            contenido += "<button class='btn btn-danger'> <i class='glyphicon glyphicon-trash'></i></button>"
+            contenido += "</td>"
             contenido += "</tr>"
         }
+        //let tamano = arrayTareas.length;
+        //for (let i = 0; i < tamano; i++) {
+        //    contenido += "<tr>"
+        //    contenido += "<td>" + arrayTareas[i].Id + "</td>"
+        //    contenido += "<td>" + arrayTareas[i].Titulo + "</td>"
+        //    if (arrayTareas[i].Estado != 2) {
+        //        contenido += "<td>" + "Pendiente" + "</td>"
+        //    } else {
+        //        contenido += "<td>" + "Terminada" + "</td>"
+        //    }
+        //    contenido += "<td>" + arrayTareas[i].Fechacreacion + "</td>"
+        //    contenido += "<td>" + arrayTareas[i].Fechatermino + "</td>"
+        //    if (arrayTareas[i].Estado != 2) {
+        //        contenido += "<td>" + "<button type='button' data-toggle='modal' data-target='#exampleModal' data-whatever='" + arrayTareas[i].Id + "'    class='btn btn-warning glyphicon glyphicon-pencil'></button>" + "</td>"
+        //    } else {
+        //        contenido += "<td>" + "<button type='button' data-toggle='modal' data-target='#exampleModal' data-whatever='" + arrayTareas[i].Id + "'    class='btn btn-warning glyphicon glyphicon-pencil' disabled></button>" + "</td>"
+        //    }
+        //    contenido += "<td>" + "<button type='button' onclick='EliminarDB(" + arrayTareas[i].Id + ")' class='btn btn-danger glyphicon glyphicon-trash'></button>" + "</td>"
+        //    contenido += "</tr>"
+        //}
         contenido += "</tbody>"
         contenido += "</table>"
-        document.getElementById("divTabla").innerHTML = contenido;
+        document.getElementById("Tabla").innerHTML = contenido;
     }
     
 }
@@ -147,18 +169,26 @@ formularioUI.addEventListener('submit', (e) => {
     e.preventDefault();//para no refrescar la web
     let tituloUI = document.getElementById("titulo").value;
     let estadoUI = document.getElementById("estado").value;
+    let notasUI = document.getElementById("notas").value;
+    let prioridadUI = document.getElementById("prioridad").value;
     let fechacreacionUI = document.getElementById("fechacreacion").value;
     let fechaterminoUI = document.getElementById("fechatermino").value;
-    if ($('#titulo').val().length == 0) {
-        alert('No te olvides del Titulo 👍');
+    if ($('#titulo').val().length == 0 || $('#notas').val().length == 0 || $('#prioridad').val().length == 0 ) {
+        alert('No te olvides llenar los campos 👍');
         return false;
     }
-    CrearObjeto(tituloUI, estadoUI, fechacreacionUI, fechaterminoUI);
+    CrearObjeto(tituloUI, estadoUI, notasUI,prioridadUI, fechacreacionUI, fechaterminoUI);
     GuardarDB();
     formularioUI.reset();
 });
 
-document.addEventListener('DOMContentLoaded', CrearTabla);
+document.addEventListener('DOMContentLoaded', (e) => {
+    e.preventDefault();//para no refrescar la web
+    $.get("Tarea/ListarTareas", (data) => {
+        //alert(JSON.stringify(data))
+        CrearTabla(arrayColumnas, data);
+    });
+});
 actualizarUI.addEventListener("click", (e) => {
     e.preventDefault;
     EditarDB();

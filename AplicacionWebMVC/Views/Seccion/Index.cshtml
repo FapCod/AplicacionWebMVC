@@ -2,20 +2,18 @@
 @{
     ViewBag.Title = "Index";
 }
-<link href="~/Content/CssPropio.css" rel="stylesheet" />
 <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
 <link href="~/Content/datatables.css" rel="stylesheet" />
-<h2>Cursos</h2>
-<label>Ingrese nombre</label>
-<input type="text" id="nombre" />
-<input type="button" class="btn btn-primary" value="Consultar" id="btnConsultar" />
-<input type="button" class="btn btn-warning" value="Limpiar" id="btnLimpiar" />
-<br />
-<!-- Trigger the modal with a button -->
-<button type="button" onclick="AbrirModal(0)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Agregar</button>
-<div id="tabla">
-</div>
+<h2>Index SECCION</h2>
 
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Agregar</button>
+
+
+
+<div id="tabla">
+
+</div>
 
 @* crear un modal bootstrap 3 *@
 
@@ -32,21 +30,18 @@
             <div class="modal-body">
                 <table style="width:80%;margin:auto">
                     <tr>
-                        <td width="40%">ID Curso:</td>
-                        <td width="60%"><input id="txtIdCurso" class="borrar" type="text" readonly /></td>
+                        <td width="40%">ID Seccion:</td>
+                        <td width="60%"><input id="txtIdSeccion" type="text" readonly /></td>
                     </tr>
                     <tr>
-                        <td width="40%">Nombre Curso:</td>
-                        <td width="60%"><input id="txtNombreCurso" class="borrar obligatorio" type="text" /></td>
+                        <td width="40%">Nombre:</td>
+                        <td width="60%"><input id="txtNombreSeccion" type="text" /></td>
                     </tr>
-                    <tr>
-                        <td width="40%">Descripcion Curso:</td>
-                        <td width="60%"><input id="txtDescripcion" class="borrar obligatorio" type="text" /></td>
-                    </tr>
+
                 </table>
             </div>
             <div class="modal-footer">
-                <button id="btnAceptar" onclick="Agregar()" type="button" class="btn btn-success">Aceptar</button>
+                <button id="btnAceptar" type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
                 <button id="btnCancelar" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -55,8 +50,9 @@
 </div>
 @*fin modal*@
 
+
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery-ui.min.js"></script>
-<script src="~/Scripts/Curso.js"></script>
+<script src="~/Scripts/Seccion.js"></script>
 <script src="~/Scripts/datatables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>

@@ -2,8 +2,22 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<link href="~/Content/CssPropio.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/datatables.css" rel="stylesheet" />
 <h2>Creacion de Tareas</h2>
+<label>BUSCAR POR PRIORIDAD</label>
+<br />
+<label for="selectBuscarP">Prioridad de Tarea</label>
+<select id="selectBuscarP" class="form-control">
+    <option value="0">ELIGE UNA PRIORIDAD</option>
+    <option value="3">Alta</option>
+    <option value="2">Media</option>
+    <option value="1">Baja</option>
+</select>
+<button id="btnBuscar" class="btn btn-danger">BUSCAR</button>
+<button id="btnLimpiar" class="btn btn-warning">LIMPIAR</button>
+<br />
 
 @*formulario*@
 <form id="formulario">
@@ -11,10 +25,22 @@
         <label for="titulo">Titulo</label>
         <input id="titulo" type="text" class="form-control" placeholder="Tu titulo" required>
     </div>
-    <div class="form-group" >
+    <div class="form-group">
         <label for="estado">Estado de Tarea</label>
         <select id="estado" class="form-control">
             <option value="1">Pendiente</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="notas">Notas:</label>
+        <input id="notas" type="text" class="form-control" placeholder="Anota algo importante" required>
+    </div>
+    <div class="form-group">
+        <label for="prioridad">Prioridad de Tarea</label>
+        <select id="prioridad" class="form-control " required>
+            <option value="3">Alta</option>
+            <option value="2">Media</option>
+            <option value="1">Baja</option>
         </select>
     </div>
     <div class="form-group" style="display: none">
@@ -29,13 +55,13 @@
 </form>
 @*fin formulario*@
 @*tabla*@
-<div id="divTabla">
+<div id="tabla">
 
 </div>
 @*fin tabla*@
 
 @* modal oculto *@
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -45,8 +71,12 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="titulon" class="control-label">Titulo:</label>
-                        <input type="text" class="form-control" id="titulon" required>
+                        <label for="idn" class="control-label">ID:</label>
+                        <input id="idn" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="titulon" class="control-label obligatorio">Titulo:</label>
+                        <input id="titulon" type="text" class="form-control obligatorio borrar" required>
                     </div>
                     <div class="form-group">
                         <label for="estadon">Estado de Tarea</label>
@@ -55,20 +85,32 @@
                             <option value="2">Terminano</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="notasn">Notas:</label>
+                        <input id="notasn" type="text" class="borrar form-control obligatorio" placeholder="Anota algo importante" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prioridadn">Prioridad de Tarea</label>
+                        <select id="prioridadn" class="borrar form-control obligatorio" required>
+                            <option value="3">Alta</option>
+                            <option value="2">Media</option>
+                            <option value="1">Baja</option>
+                        </select>
+                    </div>
                     <div class="form-group" style="display: none">
                         <label for="fechacreacionn">Fecha Creacion</label>
-                        <input id="fechacreacionn" class="form-control" type="datetime-local" disabled >
+                        <input id="fechacreacionn" class="form-control" type="datetime-local" disabled>
                     </div>
                     <div class="form-group" style="display: none">
                         <label for="fechaterminon">Fecha Termino</label>
                         <input id="fechaterminon" class="form-control" type="datetime-local" disabled>
                     </div>
-                    
+
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="actualizar" class="btn btn-primary">Actualizar</button>
+                <button type="button" onclick="Editar()" id="actualizar" class="btn btn-primary">Actualizar</button>
             </div>
         </div>
     </div>
@@ -76,7 +118,11 @@
 @* fin de modal oculto *@
 @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="joder">Open modal for mdo</button>*@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="~/Scripts/Tarea.js"></script>
+@*<script src="~/Scripts/Tarea.js"></script>*@
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/TareaDatabase.js"></script>
+<script src="~/Scripts/datatables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
 <script>
-   
+
 </script>

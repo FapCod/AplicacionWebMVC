@@ -18,7 +18,7 @@ namespace AplicacionWebMVC.Controllers
         {
             PruebaDataContext bd = new PruebaDataContext();
             var lista = bd.Alumno.Where(p => p.BHABILITADO.Equals(1))
-                .Select(p => new { p.IIDALUMNO, p.NOMBRE, p.APPATERNO,p.APMATERNO,p.TELEFONOPADRE}).ToList();
+                .Select(p => new { p.IIDALUMNO, p.NOMBRE, p.APPATERNO, p.APMATERNO, p.TELEFONOPADRE }).ToList();
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
 
@@ -26,7 +26,15 @@ namespace AplicacionWebMVC.Controllers
         {
             PruebaDataContext bd = new PruebaDataContext();
             var lista = bd.Sexo.Where(p => p.BHABILITADO.Equals(1))
-                .Select(p => new { p.IIDSEXO, p.NOMBRE }).ToList();
+                .Select(p => new { IID = p.IIDSEXO, p.NOMBRE }).ToList();
+            return Json(lista, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult BuscarPorSexo(int sexo)
+        {
+            PruebaDataContext bd = new PruebaDataContext();
+            var lista = bd.Alumno.Where(p => p.BHABILITADO.Equals(1) && p.IIDSEXO.Equals(sexo))
+                .Select(p => new { p.IIDALUMNO, p.NOMBRE, p.APPATERNO, p.APMATERNO, p.TELEFONOPADRE }).ToList();
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
     }
