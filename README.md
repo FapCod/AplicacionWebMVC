@@ -5,3 +5,6 @@
 ![](https://github.com/FapCod/AplicacionWebMVC/blob/main/editar.jpg)
 ## Vista en donde se muestra que no se pueden editar las tareas con estado TERMINADO.
 ![](https://github.com/FapCod/AplicacionWebMVC/blob/main/terminada.jpg)
+
+## Vista PRINCIPAL CON BASE DE DATOS.
+![](https://github.com/FapCod/AplicacionWebMVC/blob/main/principalconDB.jpg)
