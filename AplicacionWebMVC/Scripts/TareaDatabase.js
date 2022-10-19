@@ -61,33 +61,23 @@ const crearListado = (columnas, data) => {
             var value1 = new Date
                 (
                     parseInt(fechacreacion.replace(/(^.*\()|([+-].*$)/g, ''))
-            );
+                );
             var value2 = new Date
                 (
                     parseInt(fechatermino.replace(/(^.*\()|([+-].*$)/g, ''))
                 );
-            //var dat = value.getMonth() +
-            //    1 +
-            //    "/" +
-            //    value.getDate() +
-            //    "/" +
-            //    value.getFullYear() +
-            //    " " +
-            //    value.getTime();
             var fcreacion = new Date(value1.getTime());
             var ftermino = new Date(value2.getTime());
-
             if (fcreacion == "Invalid Date") {
                 contenido += "<td>No hay fecha</td>"
             } else {
-                contenido += "<td>" + fcreacion + "</td>"
+                contenido += "<td>" + fcreacion.toLocaleString() + "</td>"
             }
-            if (ftermino == "Invalid Date" || ftermino=="Mon Jan 01 1990 00:00:00 GMT-0500 (hora estándar de Colombia)") {
+            if (ftermino == "Invalid Date" || ftermino == "Mon Jan 01 1990 00:00:00 GMT-0500 (hora estándar de Colombia)") {
                 contenido += "<td>No hay fecha</td>"
             } else {
-                contenido += "<td>" + ftermino + "</td>"
+                contenido += "<td>" + ftermino.toLocaleString() + "</td>"
             }
-            //alert(id);
             //agregar columna de operaciones
             contenido += "<td>"
             if (data[i].ESTADO != 2) {
@@ -142,8 +132,21 @@ const AbrirModal = (id) => {
             document.getElementById("notasn").value = data[0].NOTAS;
             document.getElementById("estadon").value = data[0].ESTADO;
             document.getElementById("prioridadn").value = data[0].PRIORIDAD;
-            document.getElementById("fechacreacionn").value = data[0].FECHA_CREACION;
-            document.getElementById("fechaterminon").value = data[0].FECHA_TERMINO;
+            var fechacreacion = data[0].FECHA_CREACION;
+            var fechatermino = data[0].FECHA_TERMINO;
+            var value1 = new Date
+                (
+                    parseInt(fechacreacion.replace(/(^.*\()|([+-].*$)/g, ''))
+                );
+            var value2 = new Date
+                (
+                    parseInt(fechatermino.replace(/(^.*\()|([+-].*$)/g, ''))
+                );
+            var fcreacion = new Date(value1.getTime());
+            var ftermino = new Date(value2.getTime());
+            
+            document.getElementById("fechacreacionn").value = fcreacion.toISOString();
+            document.getElementById("fechaterminon").value = ftermino;
         });
     }
 }
@@ -164,19 +167,33 @@ const Editar = () => {
         let prioridad = document.getElementById("prioridadn").value;
         let fecha_creacion = document.getElementById("fechacreacionn").value;
         let fecha_termino = document.getElementById("fechaterminon").value;
-        if (fecha_creacion == null || fecha_creacion == "") {
-            let hoy = new Date();
-            let fecha = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
-            let hora = ('0' + hoy.getHours()).slice(-2) + ':' + ('0' + hoy.getMinutes()).slice(-2);
-            let fecha_hora_creacion = fecha + 'T' + hora;
-            fecha_creacion = fecha_hora_creacion;
+        //fechas
+        let anno = new Date(fecha_creacion).getFullYear();
+        let mes = new Date(fecha_creacion).getMonth() + 1;
+        let dia = new Date(fecha_creacion).getDate();
+        let hora = new Date(fecha_creacion).getHours();
+        let minuto = new Date(fecha_creacion).getMinutes();
+        let newdate;
+        if (hora < 10 && minuto < 10) {
+            newdate = anno + "-" + mes + "-" + dia + "T" + "0" + hora + ":" + "0" + minuto;
+        } else if (minuto < 10) {
+            newdate = anno + "-" + mes + "-" + dia + "T" + hora + ":" + "0" + minuto;
+        } else if (hora < 10) {
+            newdate = anno + "-" + mes + "-" + dia + "T" + "0" + hora + ":" + minuto;
+        } else {
+            newdate = anno + "-" + mes + "-" + dia + "T" + hora + ":" + minuto;
+        }
+        fecha_creacion = newdate;
+        //fin fechas
+        if (fecha_termino == "Invalid Date" || fecha_termino == "Mon Jan 01 1990 00:00:00 GMT-0500 (hora estándar de Colombia)") {
+            fecha_termino = '01/01/1990';
         }
         if (estado == 2) {
             let hoy = new Date();
             let fecha = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
             let hora = ('0' + hoy.getHours()).slice(-2) + ':' + ('0' + hoy.getMinutes()).slice(-2);
             let fecha_hora_termino = fecha + 'T' + hora;
-            fechaterminon = fecha_hora_termino;
+            fecha_termino = fecha_hora_termino;
         }
         if (id == null) {
             id = 0;
@@ -229,6 +246,7 @@ const CrearTarea = () => {
         let fecha = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
         let hora = ('0' + hoy.getHours()).slice(-2) + ':' + ('0' + hoy.getMinutes()).slice(-2);
         let fecha_hora_creacion = fecha + 'T' + hora;
+        console.log(fecha_hora_creacion);
         fecha_creacion = fecha_hora_creacion;
     }
     if (fecha_termino == null || fecha_termino == "") {

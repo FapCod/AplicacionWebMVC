@@ -59,7 +59,7 @@ namespace AplicacionWebMVC.Datos
                 comando.Parameters.AddWithValue("@NOTAS",tarea.NOTAS);
                 comando.Parameters.AddWithValue("@ESTADO",tarea.ESTADO);
                 comando.Parameters.AddWithValue("@PRIORIDAD",tarea.PRIORIDAD);
-                comando.Parameters.AddWithValue("@FECHA_CREACION", ((DateTime)tarea.FECHA_CREACION) );
+                comando.Parameters.AddWithValue("@FECHA_CREACION", ((DateTime)tarea.FECHA_CREACION));
                 comando.Parameters.AddWithValue("@FECHA_TERMINO", ((DateTime)tarea.FECHA_TERMINO));
                 comando.ExecuteNonQuery();
                 
@@ -89,8 +89,9 @@ namespace AplicacionWebMVC.Datos
                 comando.Parameters.AddWithValue("@NOTAS", tarea.NOTAS);
                 comando.Parameters.AddWithValue("@ESTADO", tarea.ESTADO);
                 comando.Parameters.AddWithValue("@PRIORIDAD", tarea.PRIORIDAD);
-                comando.Parameters.AddWithValue("@FECHA_CREACION", ((DateTime) tarea.FECHA_CREACION).ToShortDateString());
-                comando.Parameters.AddWithValue("@FECHA_TERMINO", ((DateTime)tarea.FECHA_CREACION).ToShortDateString());
+                comando.Parameters.AddWithValue("@FECHA_CREACION", ((DateTime)tarea.FECHA_CREACION));
+                comando.Parameters.AddWithValue("@FECHA_TERMINO", ((DateTime)tarea.FECHA_TERMINO));
+                //((DateTime)tarea.FECHA_TERMINO).ToShortDateString()
                 comando.ExecuteNonQuery();
             }
             catch (Exception e)
